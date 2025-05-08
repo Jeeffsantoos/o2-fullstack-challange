@@ -13,10 +13,6 @@ class ListAllProductsService {
   public async execute(): Promise<IProducts[]> {
     const products = await this.productsRepository.findAll();
 
-    if (products.length === 0) {
-      throw new AppError('There are no products available!', 400);
-    }
-
     return products;
   }
 }
