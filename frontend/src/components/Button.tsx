@@ -11,7 +11,7 @@ const Button = (props: CustomButtonProps) => {
 	return (
 		<MaterialButton
 			loading={isLoading}
-			size="large"
+			size="medium"
 			variant={props.variant ?? 'contained'}
 			style={{ fontWeight: 'bold', padding: '15px' }}
 			sx={{ textTransform: 'none', minWidth: 130, borderRadius: 2 }}
