@@ -31,6 +31,13 @@ Para inicializar o agente de IA, siga as instruções abaixo:
     ```
     Este comando mapeia a porta `11434` do contêiner para a porta `11434` da sua máquina local, permitindo o acesso ao agente.
 
+4.  Inicie o servidor
+
+    ```bash
+    npm i
+    npm run dev
+    ```
+
 ## Variáveis de Ambiente
 
 As seguintes variáveis de ambiente podem ser configuradas para o agente:
@@ -53,3 +60,4 @@ Este arquivo define duas rotas para a sua aplicação utilizando o framework Exp
 * **Endpoint:** `/ollama/ask`
 * **Handler:** `ollamaController.askOllamaController`
 * **Body:** `"question": "string"`
+
