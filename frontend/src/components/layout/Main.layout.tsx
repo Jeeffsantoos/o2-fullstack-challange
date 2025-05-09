@@ -2,6 +2,7 @@ import { Box, Stack } from '@mui/material';
 import AppbarLayout from './Appbar.layout';
 import FooterLayout from './Footer.layout';
 import { Outlet } from 'react-router';
+import MinimizableChatbot from '../../pages/AgentIa/MinimizableChatbot';
 
 const MainLayout = () => {
 	return (
@@ -17,6 +18,7 @@ const MainLayout = () => {
 					<Stack p={{ xs: 2, sm: 2, md: 2 }}>
 						<Outlet />
 					</Stack>
+            <MinimizableChatbot/>
 					<FooterLayout />
 				</AppbarLayout>
 			</Stack>
