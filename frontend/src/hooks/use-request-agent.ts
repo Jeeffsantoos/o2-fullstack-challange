@@ -4,9 +4,9 @@ import axios, { AxiosRequestConfig } from "axios";
 
 type SetDataFunction<T> = (data: T) => void;
 
-export const useAxios = <T>() => {
+export const useRequestAgent = <T>() => {
 
-  axios.defaults.baseURL = 'http://localhost:3000/api/v1/'
+  axios.defaults.baseURL = 'http://localhost:3001/api/v1/'
 
   const [error, setError] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
