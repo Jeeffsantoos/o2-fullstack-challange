@@ -72,18 +72,21 @@ Instruções:
   function extractSQLQueries(text) {
     const regex = /(?:SELECT|INSERT|UPDATE|DELETE)[\s\S]+?;/gi;
     const matches = text.match(regex);
-    return matches ? matches.map(q => q.trim()) : [];
+    return matches
+      ? matches.map(q => q.replace(/\s+/g, ' ').trim())
+      : [];
   }
 
   const queries = extractSQLQueries(data.message.content);
+
   if (!queries.length) {
-    return { results: 'Não foi possível obter a sua resposta!' };
+    return { answer: 'Não foi possível obter a sua resposta!' };
   }
 
-  const sql = queries[0];
 
   const connection = await db.connect();
-  const [results] = await connection.query(sql);
+
+  const [results] = await connection.query(queries[0]);
 
   const explainPrompt = `
 Você é uma assistente que gera respostas em português com base em resultados de consultas SQL.
@@ -97,7 +100,7 @@ Gere uma resposta amigável e compreensível para o usuário final, explicando o
   const explainRes = await fetch(OLLAMA_URL, {
     method: 'POST',
     body: JSON.stringify({
-      model: "orca-mini",
+      model: "llama2",
       messages: [
         { role: "user", content: explainPrompt }
       ],
@@ -107,13 +110,13 @@ Gere uma resposta amigável e compreensível para o usuário final, explicando o
   });
 
   if (!explainRes.ok) {
-    throw new Error(`Ollama explain request failed: ${explainRes.status} ${explainRes.statusText}`);
+    return { answer: 'Não foi possível obter a sua resposta!' };
   }
 
   const explainData = await explainRes.json();
   const answer = explainData.message.content.trim();
 
-  return { answer };
+  return { answer: answer };
 }
 
 module.exports = {
