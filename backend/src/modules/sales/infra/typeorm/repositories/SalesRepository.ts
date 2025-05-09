@@ -5,13 +5,16 @@ import { ISalesRepository } from '@modules/sales/domain/repositories/ISalesRepos
 import { ISales } from '@modules/sales/domain/models/ISales';
 import { Sales } from '../entities/Sales.entity';
 import { ICreateSales } from '@modules/sales/domain/models/ICreateSale';
+import Product from '@modules/products/infra/typeorm/entities/Products.entity';
 
 export default class SalesRepository implements ISalesRepository {
   private ormRepository: Repository<Sales>;
+  private productRepository: Repository<Product>;
   private saleItemRepository: Repository<SaleItem>;
 
   constructor() {
     this.ormRepository = dataSource.getRepository(Sales);
+    this.productRepository = dataSource.getRepository(Product);
     this.saleItemRepository = dataSource.getRepository(SaleItem);
   }
 
@@ -48,13 +51,16 @@ export default class SalesRepository implements ISalesRepository {
         sale_date: Between(startDate, endDate),
       },
       relations: ['sale_items'],
+      order: {
+        sale_date: 'ASC',
+      },
     });
   }
 
   public async getTotalStockValue(): Promise<number> {
-    const sales = await this.saleItemRepository
-      .createQueryBuilder('sale_items')
-      .select('SUM(sale_items.unit_price * sale_items.quantity)', 'total')
+    const sales = await this.productRepository
+      .createQueryBuilder('products')
+      .select('SUM(products.unit_price * products.available_quantity)', 'total')
       .getRawOne();
 
     return Number(sales.total) || 0;

@@ -36,7 +36,7 @@ salesRouter.get(
   salesController.show,
 );
 
-salesRouter.get(
+salesRouter.post(
   '/period',
   celebrate({
     [Segments.BODY]: {

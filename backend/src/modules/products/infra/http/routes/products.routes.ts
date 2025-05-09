@@ -40,7 +40,7 @@ productsRouter.put(
     [Segments.BODY]: {
       name: Joi.string().max(255).optional(),
       description: Joi.string().optional().allow(null, ''),
-      available_quantity: Joi.number().optional().min(0).required(),
+      available_quantity: Joi.number().optional().min(0).optional(),
       unit_price: Joi.number().precision(2).positive().optional(),
       category: Joi.string().max(100).optional().allow(null, ''),
     },

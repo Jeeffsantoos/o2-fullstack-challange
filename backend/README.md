@@ -77,3 +77,19 @@ As seguintes rotas estão definidas na API:
 * `GET /sales/total-stock-value`: Obtém o valor total do estoque.
 * `GET /sales/total-items-sold`: Obtém o total de itens vendidos.
 * `GET /sales/most-sold-products`: Obtém os produtos mais vendidos.
+
+
+#### Como fazer o build da aplicação
+
+1.  Altere os caminhos no arquivo de configuração do Typeorm para dist antes de buildar
+
+    ```bash
+    entities: ['dist/modules/**/infra/typeorm/entities/*.entity{.ts,.js}'],
+    migrations: ['dist/shared/infra/typeorm/migrations/*{.ts,.js}'],
+    ```
+
+2.  Rode  o comando
+
+    ```bash
+    npm run build
+    ```
